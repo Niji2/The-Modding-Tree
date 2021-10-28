@@ -24,5 +24,12 @@ addLayer("p", {
     hotkeys: [
         {key: "j", description: "J: Reset for Juicer Points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
+    upgrades: {
+        11: {
+            title: "Juicer Upgrader 1",
+            description: "Double your Juice gain!",
+            cost: new Decimal(1),
+        }
+    },
     layerShown(){return true}
 })
