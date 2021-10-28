@@ -40,5 +40,56 @@ addLayer("j", {
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         }
     },
+    doReset(resettingLayer){
+        let keep = []
+        if(resettingLayer == this.layer) return
+        if (resettingLayer == "sb" && hasUpgrade('sb', 12)) keep.push("upgrades")
+        layerDataReset(this.layer, keep) 
+    },
     layerShown(){return true}
+})
+addLayer("sb", {
+    name: "Sussy Baka",
+    symbol: "SB",
+    position: "A",
+    startData() { return {
+        unlocked: false,
+		points: new Decimal(0),
+    }},
+    color: "#4BDC13",
+    requires: new Decimal(10), // Can be a function that takes requirement increases into account
+    resource: "sussy bakas", // Name of prestige currency
+    baseResource: "juicer points", // Name of resource prestige is based on
+    baseAmount() {return player.j.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        if(hasUpgrade(this.layer, 13)) mult = mult.times(2)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 1, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "s", description: "S: Reset for Sussy Bakas", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    upgrades: {
+        11: {
+            title: "Be a bit more Sussy",
+            description: "^ your juice gain",
+            cost: new Decimal(1),
+        },
+        12: {
+            title: "Be a bit more Baka",
+            description: "Keep your Juicer Point upgrade on reset",
+            cost: new Decimal(5),
+        },
+        13: {
+            title: "Be a bit more Sussy Baka",
+            description: "Doubles your Sussy Baka gain",
+            cost: new Decimal(10),
+        }
+    }    
 })
