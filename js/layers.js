@@ -1,4 +1,4 @@
-addLayer("p", {
+addLayer("j", {
     name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "J", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
@@ -26,9 +26,18 @@ addLayer("p", {
     ],
     upgrades: {
         11: {
-            title: "Juicer Upgrader 1",
+            title: "Juicer Upgrade 1",
             description: "Double your Juice gain!",
             cost: new Decimal(1),
+        },
+        12: {
+            title: "Juicer Upgrade 2",
+            description: "Gain more Juice based on your Juicer Points!",
+            cost: new Decimal(5),
+            effect() {
+                return player[this.layer].points.add(1).pow(0.5)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         }
     },
     layerShown(){return true}
