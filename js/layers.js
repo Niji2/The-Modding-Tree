@@ -37,7 +37,7 @@ addLayer("j", {
             description: "Gain more Juice based on your Juicer Points!",
             cost: new Decimal(5),
             effect() {
-                if(player[this.layer].points.add(1).pow(0.5) < 42069){
+                if(player[this.layer].points.add(1).pow(0.5) < new decimal(42069)){
                     return player[this.layer].points.add(1).pow(0.5)
                 }
                 else{
