@@ -37,9 +37,15 @@ addLayer("j", {
             description: "Gain more Juice based on your Juicer Points!",
             cost: new Decimal(5),
             effect() {
-                return player[this.layer].points.add(1).pow(0.5)
+                if(player[this.layer].points.add(1).pow(0.5) < 42069){
+                    return player[this.layer].points.add(1).pow(0.5)
+                }
+                else{
+                    return new Decimal(42069)
+                }
+                
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x"  }, // Add formatting to the effect
         },
         21: {
             title: "Juicer Automation",
@@ -56,7 +62,6 @@ addLayer("j", {
     update(delta){
         if (hasUpgrade(this.layer, 21))
             addPoints(this.layer, tmp[this.layer].resetGain.mul(delta).mul(0.1))
-            softcap(player.points, new Decimal(1000000), 0.33)
     },
     layerShown(){return true}
 })
