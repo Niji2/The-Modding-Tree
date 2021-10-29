@@ -56,6 +56,7 @@ addLayer("j", {
     update(delta){
         if (hasUpgrade(this.layer, 21))
             addPoints(this.layer, tmp[this.layer].resetGain.mul(delta).mul(0.1))
+            softcap(player.points, new Decimal(10000000), 0.33)
     },
     layerShown(){return true}
 })
